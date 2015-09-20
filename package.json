@@ -1,0 +1,19 @@
+{
+  "name": "node_basics",
+  "version": "0.0.1",
+  "description": "Node basics",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajitprak/Node_Basics.git"
+  },
+  "author": "Ajith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ajitprak/Node_Basics/issues"
+  },
+  "homepage": "https://github.com/ajitprak/Node_Basics#readme"
+}
