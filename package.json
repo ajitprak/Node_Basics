@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/ajitprak/Node_Basics/issues"
   },
-  "homepage": "https://github.com/ajitprak/Node_Basics#readme"
+  "homepage": "https://github.com/ajitprak/Node_Basics#readme",
+  "dependencies": {
+    "ejs": "^2.3.4",
+    "express": "^4.13.3"
+  }
 }
