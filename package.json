@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ajitprak/Node_Basics#readme",
   "dependencies": {
+    "body-parser": "^1.14.0",
     "ejs": "^2.3.4",
     "express": "^4.13.3"
   }
