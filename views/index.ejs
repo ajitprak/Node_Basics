@@ -2,17 +2,20 @@
 <html>
     <head>
     <title>Node Basics</title>
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css"/>
     </head>
     <body>
-        <h1> <%= title %></h1>
-        <ul>
-            <% for(i=0;i<items.length;i++){ %>
-            <li><%= items[i].desc %></li>
-            <% } %>
-        </ul>
-        <form action="/add" method="post">
-            <input type="text" name="newItem" />
-            <input type="submit" />
-        </form>
+        <div class="container">
+            <h1> <%= title %></h1>
+            <ul>
+                <% for(i=0;i<items.length;i++){ %>
+                <li><%= items[i].desc %></li>
+                <% } %>
+            </ul>
+            <form action="/add" method="post">
+                <input type="text" name="newItem" />
+                <input type="submit" />
+            </form>
+        </div>
     </body>
 </html>
