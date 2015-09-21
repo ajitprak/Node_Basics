@@ -2,37 +2,34 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-
-var todoItems = [
-            {id:1,desc:"Foo"},
-            {id:2,desc:"Bar"},
-            {id:3,desc:"Coz"}
-        ];
+var passport = require('passport');
+var passportLocal = require('passport-local');
+var passportHttp = require('passport-http');
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
 
 //configure app
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
 
 //use middleware
-app.use(bodyParser());
-app.use(express.static(path.join(__dirname,"bower_components")))
+app.use(express.static(path.join(__dirname,"bower_components"))); //Static files can be served without the request being parsed by the body parser performance improvement
+app.use(bodyParser.urlencoded({extended:false})); // urlencoded and extended add to remove decrepted warning
+app.use(cookieParser());
+app.use(expressSession({
+    secret : process.env.SESSION_SECRET || "Bharath",
+    resave : false,
+    saveUninitialized : false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //configure routes
-app.get('/',function(req,res){
-    res.render("index",{
-        title:"Node Basics",
-        items:todoItems
-    });
-});
-
-app.post('/add',function(req,res){
-    var newItem = req.body.newItem;
-    todoItems.push({id:todoItems.length+1,desc:newItem});
-    res.redirect('/');
-});
+app.use(require('./todos'));
 
 app.listen(3000,function(){
-    console.log("Server listening to port 3000")
+    console.log("Server listening to port 3000");
 });
 
 

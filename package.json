@@ -18,7 +18,13 @@
   "homepage": "https://github.com/ajitprak/Node_Basics#readme",
   "dependencies": {
     "body-parser": "^1.14.0",
+    "bower": "^1.5.2",
+    "cookie-parser": "^1.4.0",
     "ejs": "^2.3.4",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "express-session": "^1.11.3",
+    "passport": "^0.3.0",
+    "passport-http": "^0.3.0",
+    "passport-local": "^1.0.0"
   }
 }
