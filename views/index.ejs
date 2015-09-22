@@ -5,14 +5,13 @@
     <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css"/>
     </head>
     <body>
-        <a href="/login">Click to Login</a>
+        <% if (!isAuthenticated){ %>
+            <a href="/login">Click to Login</a>
+        <% }  else { %>
+            Hello <%= user.name %>
+            <a href="/logout"> Logout </a>
+        <% } %>
         <div class="container">
-            <h1> <%= title %></h1>
-            <ul>
-                <% for(i=0;i<items.length;i++){ %>
-                <li><%= items[i].desc %></li>
-                <% } %>
-            </ul>
             <form action="/add" method="post">
                 <input type="text" name="newItem" />
                 <input type="submit" />

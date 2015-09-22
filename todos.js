@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var passport = require('passport');
 var todoItems = [
             {id:1,desc:"Foo"},
             {id:2,desc:"Bar"},
@@ -10,8 +10,8 @@ var todoItems = [
 
 router.get('/',function(req,res){
     res.render("index",{
-        title:"Node Basics",
-        items:todoItems
+        isAuthenticated:req.isAuthenticated(),
+        user:req.user
     });
 });
 
@@ -25,9 +25,6 @@ router.get("/login",function(req,res){
     res.render('login');
 });
 
-router.post("/login",function(req,res){
-    
-});
 
 module.exports = router;
 
