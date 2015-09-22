@@ -8,6 +8,23 @@ var passportLocal = require('passport-local');
 var passportHttp = require('passport-http');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
+var https = require('https');
+var fs = require('fs');
+
+var server = https.createServer({
+    cert:fs.readFileSync(__dirname+"\\my.crt"),
+    key: fs.readFileSync(__dirname+"\\my.key")
+},app);
+
+function ensureAuthenticated(req,res,next){
+    //console.log(req.isAuthenticated);
+    if(req.isAuthenticated()){
+        next();
+    }
+    else{
+        res.sendStatus(403);
+    }
+};
 
 //configure app
 app.set('view engine','ejs');
@@ -30,7 +47,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Tell passport how to authenticate user - usually a method to call DB
-passport.use(new passportLocal.Strategy(function(userName,password,done){
+
+var ourStrategy = function(userName,password,done){
     var err = false;
     if(userName == password){
         //var name = userName+"fullName";
@@ -42,7 +60,9 @@ passport.use(new passportLocal.Strategy(function(userName,password,done){
     else if(err){
         done(err);
     }
-}));
+};
+passport.use(new passportLocal.Strategy(ourStrategy));
+passport.use(new passportHttp.BasicStrategy(ourStrategy))
 
 //Tell passport how to serialize and de-serialize User
 passport.serializeUser(function(user,done){
@@ -52,7 +72,7 @@ passport.serializeUser(function(user,done){
 passport.deserializeUser(function(id,done){
     done(null,{id:id,name:id});//First Param is error
 });
-//configure routes
+//configure route
 app.use(require('./todos'));
 
 //Use the passport in the login endpoint
@@ -67,8 +87,18 @@ app.get('/logout',function(req,res){
     res.redirect('/');
 });
 
+app.use('/api',passport.authenticate('basic',{session:false}));
 
-app.listen(3000,function(){
+app.get('/api/data',ensureAuthenticated,function(req,res){ //
+    res.json([
+        {name:"foo"},
+        {name:"bar"},
+        {name:"baz"}
+    ]);
+});
+
+
+server.listen(3000,function(){
     console.log("Server listening to port 3000");
 });
 
